@@ -1,0 +1,8 @@
+[submodule "cinemax-front"]
+	path = cinemax-front
+	url = git@github.com:jvmxgs/cinemax-front.git
+	branch = main
+[submodule "cinemax-back"]
+	path = cinemax-back
+	url = git@github.com:jvmxgs/cinemax-back.git
+	branch = main

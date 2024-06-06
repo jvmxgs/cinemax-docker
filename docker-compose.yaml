@@ -1,0 +1,89 @@
+services:
+  cinemax-back:
+    container_name: cinemax-back
+    build:
+      context: ./cinemax-back
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    privileged: true
+    tty: true
+    depends_on:
+      - cinemax-postgres
+    working_dir: /var/www
+    volumes:
+       - ./cinemax-back:/var/www
+    expose:
+      - "9000"
+    networks:
+      - cinemax-network
+
+  cinemax-front:
+    container_name: cinemax-front
+    build:
+      context: ./cinemax-front
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    privileged: true
+    tty: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    working_dir: /app
+    volumes:
+      - "./cinemax-front:/app"
+      - /app/node_modules
+    expose:
+      - "5173"
+    networks:
+      - cinemax-network
+
+  cinemax-nginx:
+    image: nginx:1.22-alpine
+    container_name: cinemax-nginx
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "5173:5173"
+      - "9000:9000"
+    depends_on:
+      - cinemax-back
+      - cinemax-front
+    volumes:
+      - ./cinemax-back/public:/var/www/public
+      - ./cinemax-front/public:/app
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - cinemax-network
+
+  cinemax-postgres:
+    image: postgres:latest
+    container_name: cinemax-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: toor
+      POSTGRES_DB: cinemax
+    volumes:
+      - cinemax-dbdata:/var/lib/postgresql/data
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"
+    networks:
+      - cinemax-network
+
+  cinemax-redis:
+    image: redis:7.0.1-alpine
+    container_name: cinemax-redis
+    tty: true
+    ports:
+      - "6380:6379"
+    networks:
+      - cinemax-network
+
+networks:
+  cinemax-network:
+    driver: bridge
+
+volumes:
+  cinemax-dbdata:
+    driver: local
