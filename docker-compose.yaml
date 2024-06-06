@@ -25,6 +25,7 @@ services:
     restart: unless-stopped
     privileged: true
     tty: true
+    stdin_open: true
     environment:
       - CHOKIDAR_USEPOLLING=true
     working_dir: /app
@@ -49,7 +50,6 @@ services:
       - cinemax-front
     volumes:
       - ./cinemax-back/public:/var/www/public
-      - ./cinemax-front/public:/app
       - ./nginx/conf.d/:/etc/nginx/conf.d/
     networks:
       - cinemax-network
