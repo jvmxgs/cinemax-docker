@@ -50,6 +50,7 @@ services:
       - cinemax-front
     volumes:
       - ./cinemax-back/public:/var/www/public
+      - ./cinemax-back/storage/app/public:/var/www/storage/app/public
       - ./nginx/conf.d/:/etc/nginx/conf.d/
     networks:
       - cinemax-network
