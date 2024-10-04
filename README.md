@@ -87,3 +87,89 @@ If you encounter any problems with the Docker project build, you can access the 
   ```bash
   npm install
   ```
+### Docker commands
+
+## 1. Start the services
+Start the containers if they are stopped:
+```bash
+docker start cinemax-back
+docker start cinemax-front
+```
+
+## 2. Stop the services
+Stop the running containers:
+
+```bash
+docker stop cinemax-back
+docker stop cinemax-front
+```
+
+## 3. Restart the services
+Restart the containers:
+
+```bash
+docker restart cinemax-back
+docker restart cinemax-front
+```
+
+## 4. Remove the services (containers)
+Stop and remove the containers:
+
+```bash
+docker rm -f cinemax-back
+docker rm -f cinemax-front
+```
+
+## 5. Build or rebuild images (Docker Compose)
+If you are using docker-compose to manage your services, you can rebuild the images:
+
+```bash
+docker-compose build cinemax-back
+docker-compose build cinemax-front
+```
+
+## 6. Rebuild and restart (Docker Compose)
+Force the image rebuild and restart the containers:
+
+```bash
+docker-compose up --build cinemax-back
+docker-compose up --build cinemax-front
+```
+
+##  7. Bring up services with docker-compose
+Bring up or start the services defined in docker-compose.yml:
+
+```bash
+docker-compose up -d cinemax-back
+docker-compose up -d cinemax-front
+```
+
+## 8. Stop services with docker-compose
+Stop the services without removing the containers:
+
+```bash
+docker-compose stop cinemax-back
+docker-compose stop cinemax-front
+```
+
+## 9. Remove services with docker-compose
+Stop and remove the containers, networks, and volumes created by docker-compose:
+
+```bash
+docker-compose down
+```
+
+## 10. View logs
+Get the logs from the services:
+
+```bash
+docker logs cinemax-back
+docker logs cinemax-front
+```
+
+To continuously follow the logs in real-time:
+
+```bash
+docker logs -f cinemax-back
+docker logs -f cinemax-front
+```
